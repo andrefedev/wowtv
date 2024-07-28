@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:rpctv/src/conf.dart';
-import 'package:rpctv/src/features/app/app.dart';
-import 'package:rpctv/src/widgetcom.dart';
+import 'package:wowtv/src/conf.dart';
+import 'package:wowtv/src/features/app/app.dart';
+import 'package:wowtv/src/widgetcom.dart';
 
 class AppScreen extends StatefulWidget {
   const AppScreen({super.key});

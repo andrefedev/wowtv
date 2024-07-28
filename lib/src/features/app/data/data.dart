@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rpctv/src/features/app/app.dart';
+import 'package:wowtv/src/features/app/app.dart';
 
 class AppPage extends Equatable {
   final String name;

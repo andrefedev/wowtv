@@ -11,8 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: AppTheme.light,
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.dark,
       title: AppConfig.appName,
+      themeMode: ThemeMode.dark,
      routerConfig: getIt<AppGoRouter>().router,
     );
   }

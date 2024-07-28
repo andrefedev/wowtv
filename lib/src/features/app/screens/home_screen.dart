@@ -1,11 +1,20 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:rpctv/src/widgetcom.dart';
-import 'package:rpctv/src/features/app/app.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:wowtv/src/widgetcom.dart';
+import 'package:wowtv/src/features/app/app.dart';
 
 // ignore: constant_identifier_names
 const _tabBarDestinations = [
   AppPage(
-    name: 'Series',
+    name: 'Inicio',
+    screen: Scaffold(),
+    iconData: Icons.home_max,
+    iconDataSelected: Icons.home_max,
+  ),
+  AppPage(
+    name: 'Tv Series',
     screen: Scaffold(),
     iconData: Icons.home_max,
     iconDataSelected: Icons.home_max,
@@ -15,12 +24,6 @@ const _tabBarDestinations = [
     screen: Scaffold(),
     iconData: Icons.search,
     iconDataSelected: Icons.search,
-  ),
-  AppPage(
-    name: 'Categorías',
-    screen: Scaffold(),
-    iconData: Icons.star_border,
-    iconDataSelected: Icons.star_border,
   ),
 ];
 
@@ -38,8 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
       length: _tabBarDestinations.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Icon(
-            Icons.live_tv,
+          title: Text(
+            "WOWTV",
+            style: GoogleFonts.oswald(fontSize: 28),
           ),
           bottom: TabBar(
             tabs: [

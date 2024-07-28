@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rpctv/src/widgetcom.dart';
-import 'package:rpctv/src/features/app/app.dart';
+import 'package:wowtv/src/widgetcom.dart';
+import 'package:wowtv/src/features/app/app.dart';
 
 class AppFailureScreen extends StatelessWidget {
   const AppFailureScreen({super.key});
@@ -19,9 +19,11 @@ class AppFailureScreen extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 32.0,
+                  backgroundColor: Colors.black12,
                   child: Icon(
                     Icons.heart_broken,
-                    size: 24.0,
+                    size: 28.0,
+                    color: Colors.red,
                   ),
                 ),
                 RetryList(

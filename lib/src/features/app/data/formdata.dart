@@ -1,5 +1,5 @@
 import 'package:formz/formz.dart';
-import 'package:rpctv/src/validator.dart';
+import 'package:wowtv/src/validator.dart';
 
 // ##################
 // # RPC HOST INPUT #

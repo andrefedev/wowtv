@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,8 +30,14 @@ Future<void> main() async {
   );
 
   // Admob
-  // MobileAds.instance.initialize();
-  unawaited(MobileAds.instance.initialize());
+  await MobileAds.instance.initialize();
+
+  // Google Fonts
+  await GoogleFonts.pendingFonts([
+    GoogleFonts.roboto(),
+    GoogleFonts.oswald(),
+    GoogleFonts.bebasNeue(),
+  ]);
 
   // GetIt Initialized
   setup();

@@ -2,12 +2,13 @@ import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:wowtv/src/api/repository.dart';
 
 import 'conf.dart';
 import 'router.dart';
 import 'api/api.dart';
-import 'api/storage.dart';
-import 'api/storage.dart';
+import 'api/storagesvc.dart';
+import 'api/storagesvc.dart';
 import 'features/app/app.dart';
 
 GetIt getIt = GetIt.instance;
@@ -26,26 +27,21 @@ void setup() {
   // FlutterSecureStorage
   getIt.registerLazySingleton<FlutterSecureStorage>(() => const FlutterSecureStorage());
 
+  // Local Storage
+  getIt.registerLazySingleton<LocalStorage>(() => LocalStorage(storage: getIt<SharedPreferences>()));
+
   // Secure Storage
   getIt.registerLazySingleton<SecureStorage>(() => SecureStorage(storage: getIt<FlutterSecureStorage>()));
-
 
   // ###################
   // (GRPC) API CLIENT #
   // ###################
 
-  getIt.registerLazySingleton<ClientChannel>(
-      () => ClientChannel(AppConfig.apiHost, port: AppConfig.apiPort, options: CHANNEL_OPTIONS),
-      dispose: (client) => client.terminate());
+  getIt.registerLazySingleton<HttpService>(
+      () => HttpService(baseUrl: AppConfig.apiHost, getIdToken: getIt<SecureStorage>().getIdToken),
+      dispose: (ref) => ref.close());
 
-  getIt.registerLazySingleton<RpcTvClient>(
-    () => RpcTvClient(
-      getIt<ClientChannel>(),
-      interceptors: [
-        AuthTokenMiddleware(getIt<SecureStorage>().idToken),
-      ],
-    ),
-  );
+  getIt.registerLazySingleton<Repository>(() => Repository(getIt()));
 
   // #################
   // # BLOC SERVICES #
@@ -53,7 +49,7 @@ void setup() {
 
   // APP BLOC
 
-  getIt.registerLazySingleton<AppBloc>(() => AppBloc(appsvc: getIt(), storage: getIt()));
+  getIt.registerLazySingleton<AppBloc>(() => AppBloc(reposvc: getIt(), storage: getIt()));
 
   getIt.registerLazySingleton<AppGoRouter>(() => AppGoRouter(appBloc: getIt<AppBloc>()));
 }

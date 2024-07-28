@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:uuid/uuid.dart';
-import 'package:grpc/grpc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rpctv/src/api/api.dart';
-import 'package:rpctv/src/api/storage.dart';
+import 'package:wowtv/src/api/api.dart';
+import 'package:wowtv/src/api/model.dart';
+import 'package:wowtv/src/api/repository.dart';
+import 'package:wowtv/src/api/storagesvc.dart';
 
 part 'app_event.dart';
 
@@ -18,13 +19,13 @@ part 'app_status.dart';
 const uuid = Uuid();
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  final RpcTvClient _appsvc;
-  final LocalStorage _storage;
+  final Repository _reposvc;
+  final SecureStorage _storage;
 
   AppBloc({
-    required RpcTvClient appsvc,
-    required LocalStorage storage,
-  })  : _appsvc = appsvc,
+    required Repository reposvc,
+    required SecureStorage storage,
+  })  : _reposvc = reposvc,
         _storage = storage,
         super(const AppState()) {
     on<AppEventInited>(_onAppInited);
@@ -44,20 +45,30 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ),
       ));
 
+      // ############
+      // # ID TOKEN #
+      // ############
+
+      String? idToken;
+      idToken = await _storage.getIdToken();
+      if (idToken == null) {
+        idToken = await _reposvc.idToken();
+        await _storage.setIdToken(idToken);
+      }
+
       // #################
       // # FETCH USER ME #
       // #################
 
-      final request = UserMeRequest();
-      await _appsvc.userMe(request).then((response) {
+      await _reposvc.userme(idToken).then((user) {
         emit(state.copyWith(
-          user: response.user,
+          user: user,
           status: state.status.copyWith(
             reason: AppReason.loaded,
           ),
         ));
       });
-    } on GrpcError catch (e) {
+    } on HttpException catch (e) {
       emit(state.copyWith(
         status: state.status.copyWith(
           err: e.message,
@@ -81,7 +92,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   _onAppLogoutRequested(AppEventLogoutRequested event, Emitter<AppState> emit) {
-    unawaited(_storage.delIdToken());
+    // unawaited(_storage.delIdToken());
     // emit(const AppState.unauthenticated());
   }
 }

@@ -2,8 +2,10 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
+
 import 'package:http/retry.dart';
+import 'package:http/http.dart' as http;
 
 part 'api.e.dart';
 
@@ -12,22 +14,23 @@ typedef AuthProvider = Future<String?> Function();
 
 class HttpService extends http.BaseClient {
   final String _baseUrl;
-  final String _baseKey;
-  final SecureStorage _storage;
+  final AuthProvider _getIdToken;
 
   HttpService({
     required String baseUrl,
-    required String baseKey,
-    required SecureStorage storage,
+    required AuthProvider getIdToken,
   })  : _baseUrl = baseUrl,
-        _baseKey = baseKey,
-        _storage = storage;
+        _getIdToken = getIdToken;
 
   final http.Client _client = RetryClient(http.Client());
 
+  @override
+  void close() {
+    _client.close();
+  }
+
   Uri uri(String path, {Map<String, dynamic>? query}) {
     Map<String, String>? queryParam;
-    if (query != null) queryParam = flattenMap(query);
     return Uri.parse(_baseUrl + path).replace(queryParameters: queryParam);
   }
 
@@ -41,7 +44,7 @@ class HttpService extends http.BaseClient {
     request.headers[HttpHeaders.acceptEncodingHeader] = ContentType.json.value;
 
     // auth add token to request
-    final token = await _storage.get(_baseKey);
+    final token = await _getIdToken();
     if (token != null) {
       request.headers.putIfAbsent(HttpHeaders.authorizationHeader, () => token);
     }
@@ -132,8 +135,8 @@ class HttpService extends http.BaseClient {
         throw HttpException.resourceExhausted(message);
       case (HttpStatus.clientClosedRequest):
         throw HttpException.cancelled(message);
-    // case (HttpStatus.internalServerError):
-    //   throw HttpException.internal(message);
+      // case (HttpStatus.internalServerError):
+      //   throw HttpException.internal(message);
       case (HttpStatus.notImplemented):
         throw HttpException.unimplemented(message);
       case (HttpStatus.serviceUnavailable):
@@ -143,7 +146,7 @@ class HttpService extends http.BaseClient {
       default:
         throw const HttpException.unknown(
           "Ocurrió un error desconocido en la comunicación con el servidor. "
-              "Si el problema persiste, por favor comunícate con el equipo de soporte técnico.",
+          "Si el problema persiste, por favor comunícate con el equipo de soporte técnico.",
         );
     }
   }
@@ -157,7 +160,7 @@ class HttpService extends http.BaseClient {
 
     throw const HttpException.unknown(
       "Ocurrió un error en la comunicación con el servidor. "
-          "Si el problema persiste, por favor comunicate con el equipo de soporte técnico.",
+      "Si el problema persiste, por favor comunicate con el equipo de soporte técnico.",
     );
     // switch (exec.osError?.errorCode) {
     //   case (100):

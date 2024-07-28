@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rpctv/src/api/model.dart';
-import 'package:rpctv/src/features/app/app.dart';
+import 'package:wowtv/src/api/model.dart';
+import 'package:wowtv/src/features/app/app.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -68,13 +68,16 @@ class _SettingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
+    final oddItemColor = colorScheme.primary.withOpacity(0.025);
+    final evenItemColor = colorScheme.primary.withOpacity(0.05);
+
     return SingleChildScrollView(
       child: Column(
         children: [
           _SettingResultItem(
-            title: "Nick",
+            title: "Usuario",
+            color: oddItemColor,
             iconData: Icons.copy,
             subtitle: context.read<AppBloc>().state.user!.nick,
             onPressed: () => _onNick("${context.read<AppBloc>().state.user?.idToken}"),
@@ -84,56 +87,63 @@ class _SettingBody extends StatelessWidget {
           ),
           _SettingResultItem(
             title: "Créditos",
+            color: evenItemColor,
             iconData: Icons.chevron_right,
-            subtitle: "Saldo disponible ${context.read<AppBloc>().state.user!.credits}",
+            subtitle: "Saldo disponible 0",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Contacto",
+            color: oddItemColor,
             iconData: Icons.chevron_right,
             subtitle: "Soporte y contacto",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Suscripción",
+            color: evenItemColor,
             iconData: Icons.chevron_right,
             subtitle: "Administrar suscripción",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Calificar la App",
+            color: oddItemColor,
             iconData: Icons.chevron_right,
             subtitle: "Dejar calificación en la tienda",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Compartir la App",
+            color: evenItemColor,
             iconData: Icons.chevron_right,
-            subtitle: "Ayudanos a compartir la aplicación",
+            subtitle: "Ayudanos a compartir la App",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Política de privacidad",
+            color: oddItemColor,
             iconData: Icons.chevron_right,
-            subtitle: "Manejo transparente de datos personales",
+            subtitle: "Manejo transparente de datos",
           ),
           const Divider(
             height: 0.0,
           ),
-          const _SettingResultItem(
+          _SettingResultItem(
             title: "Términos y condiciones",
+            color: evenItemColor,
             iconData: Icons.chevron_right,
-            subtitle: "Condiciones para un ambiente seguro y responsable",
+            subtitle: "Ambiente seguro y responsable",
           ),
         ],
       ),
@@ -143,6 +153,7 @@ class _SettingBody extends StatelessWidget {
 
 class _SettingResultItem extends StatelessWidget {
   final String title;
+  final Color color;
   final String? subtitle;
   final IconData? iconData;
   final VoidCallback? onPressed;
@@ -150,6 +161,7 @@ class _SettingResultItem extends StatelessWidget {
   const _SettingResultItem({
     super.key,
     required this.title,
+    required this.color,
     this.subtitle,
     this.iconData,
     this.onPressed,
@@ -159,44 +171,47 @@ class _SettingResultItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    return InkWell(
-      onTap: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: textTheme.titleMedium,
-                  ),
-                  if (subtitle != null)
-                    Text(
-                      subtitle!,
-                      style: textTheme.bodyLarge,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                ],
-              ),
-            ),
-            if (iconData != null)
+    return Material(
+      color: color,
+      child: InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
               Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: IconButton(
-                    icon: Icon(iconData),
-                    onPressed: onPressed,
-                  ),
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: textTheme.titleMedium,
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle!,
+                        style: textTheme.bodyLarge,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
                 ),
               ),
-          ],
+              if (iconData != null)
+                Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: IconButton(
+                      icon: Icon(iconData),
+                      onPressed: onPressed,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

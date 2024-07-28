@@ -1,8 +1,17 @@
 import 'package:uuid/uuid.dart';
 import 'package:wowtv/src/conf.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const uuid = Uuid();
+
+class LocalStorage {
+  final SharedPreferences _storage;
+
+  const LocalStorage({
+    required SharedPreferences storage,
+  }) : _storage = storage;
+}
 
 class SecureStorage {
   final FlutterSecureStorage _storage;
@@ -15,21 +24,12 @@ class SecureStorage {
   // # ID TOKEN #
   // ############
 
-  Future<String> idToken() async {
+  Future<String?> getIdToken() async {
     const key = AppConfig.idToken;
-    final value = await _storage.read(key: key) ?? "";
-
-    // not exists
-    String idToken = value;
-    if (value.isEmpty) {
-      idToken = uuid.v4();
-      await _storage.write(key: key, value: idToken);
-    }
-
-    return idToken;
+    return await _storage.read(key: key);
   }
 
-  Future<void> idToken2(String idToken) async {
+  Future<void> setIdToken(String idToken) async {
     const key = AppConfig.idToken;
     await _storage.write(key: key, value: idToken);
   }

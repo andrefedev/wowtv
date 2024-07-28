@@ -5,10 +5,9 @@ class AppConfig {
   // static const apiPort = 443;
   // static const apiHost = "apigo-dev-yadsbf2zpq-ue.a.run.app";
 
-  static const appName = "RpcTv";
+  static const appName = "WoWTv";
 
-  static const apiPort = 8080;
-  static const apiHost = "192.168.1.23";
+  static const apiHost = "http://192.168.1.23:8080";
 
   static const idToken = "05cf7ec9171eeb806e4797abeffd874a";
   static const storeKey = "6238ee6fc88fd9fe0e1cdc7d7f113973";
@@ -16,12 +15,6 @@ class AppConfig {
   // Limite para paginación
   static const int pageLimit = 40;
   static const double hToolbarHeight = 80;
-
-  // ########
-  // # TMDB #
-  // ########
-
-  static const int tmdbPageLimit = 20;
 }
 
 

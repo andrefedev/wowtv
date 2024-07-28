@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AppTheme {
-  static final light = ThemeData(
-    useMaterial3: true,
+  static final dark = ThemeData(
     fontFamily: "Roboto",
+    brightness: Brightness.dark,
     colorSchemeSeed: Colors.blue,
-
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
     // ThemeData

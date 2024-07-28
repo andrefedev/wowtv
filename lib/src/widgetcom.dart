@@ -233,9 +233,8 @@ class RetryList extends StatelessWidget {
             height: 8.0,
           ),
           SizedBox(
-            child: ElevatedButton(
+            child: TextButton(
               onPressed: onPressed,
-              style: TextButton.styleFrom(),
               child: Text(
                 title ?? "Reintentar",
               ),

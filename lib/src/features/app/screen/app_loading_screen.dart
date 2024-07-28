@@ -29,6 +29,7 @@ class AppLoadingScreen extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 32.0,
+              backgroundColor: Colors.black12,
               child: _IconVideoPulse(
                 key: Key("_IconVideoPulse"),
               ),
@@ -96,9 +97,10 @@ class _IconVideoPulseState extends State<_IconVideoPulse> with SingleTickerProvi
       builder: (context, child) {
         return Transform.scale(
           scale: _animation.value,
-          child: const Icon(
-            Icons.video_settings,
+          child:  Icon(
+            Icons.video_collection,
             size: 28.0,
+            color: Colors.red,
           ),
         );
       },
