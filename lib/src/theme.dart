@@ -4,7 +4,7 @@ class AppTheme {
   static final dark = ThemeData(
     fontFamily: "Roboto",
     brightness: Brightness.dark,
-    colorSchemeSeed: Colors.blue,
+    colorSchemeSeed: Colors.red,
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
     // ThemeData
@@ -15,10 +15,10 @@ class AppTheme {
     // snackBarTheme:
   );
 
-  static const appBarTheme = AppBarTheme(
+  static const  appBarTheme = AppBarTheme(
     elevation: 2,
-    centerTitle: true,
-    shadowColor: Colors.black12,
+    // backgroundColor: Colors.red.shade900,
+    // shadowColor: Colors.black12,
     // foregroundColor: Colors.white,
   );
 

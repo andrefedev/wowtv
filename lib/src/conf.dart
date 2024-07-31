@@ -5,7 +5,7 @@ class AppConfig {
   // static const apiPort = 443;
   // static const apiHost = "apigo-dev-yadsbf2zpq-ue.a.run.app";
 
-  static const appName = "WoWTv";
+  static const appName = "WOWTV";
 
   static const apiHost = "http://192.168.1.23:8080";
 

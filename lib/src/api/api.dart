@@ -29,9 +29,8 @@ class HttpService extends http.BaseClient {
     _client.close();
   }
 
-  Uri uri(String path, {Map<String, dynamic>? query}) {
-    Map<String, String>? queryParam;
-    return Uri.parse(_baseUrl + path).replace(queryParameters: queryParam);
+  Uri uri(String path, {Map<String, String>? query}) {
+    return Uri.parse(_baseUrl + path).replace(queryParameters: query);
   }
 
   @override

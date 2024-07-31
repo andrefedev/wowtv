@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wowtv/src/api/data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'model.e.dart';
@@ -35,35 +36,35 @@ class User extends Equatable {
 @JsonSerializable()
 class TvFilm extends Equatable {
   final String ref;
+  final bool main;
+  final TvType type;
   final String name1;
   final String name2;
-  final int budget;
-  final int revenue;
   final String tagline;
   final int runtime;
   final double voteavg;
-  final int votesize;
+  final int popular;
   final String overview;
+  final DateTime releaseDate;
+  final DateTime createdDate;
   final String posterPath2;
   final String backdpPath2;
-  final DateTime releaseDate;
-  final DateTime updatedDate;
 
   const TvFilm({
     required this.ref,
+    required this.main,
+    required this.type,
     required this.name1,
     required this.name2,
-    required this.budget,
-    required this.revenue,
     required this.tagline,
     required this.runtime,
     required this.voteavg,
-    required this.votesize,
+    required this.popular,
     required this.overview,
+    required this.releaseDate,
+    required this.createdDate,
     required this.posterPath2,
     required this.backdpPath2,
-    required this.releaseDate,
-    required this.updatedDate,
   });
 
   Map<String, dynamic> toJson() => _$TvFilmToJson(this);
@@ -73,18 +74,18 @@ class TvFilm extends Equatable {
   @override
   List<Object?> get props => [
         ref,
+        type,
+        main,
         name1,
         name2,
-        budget,
-        revenue,
         tagline,
         runtime,
         voteavg,
-        votesize,
+        popular,
         overview,
+        createdDate,
+        releaseDate,
         posterPath2,
         backdpPath2,
-        releaseDate,
-        updatedDate,
       ];
 }

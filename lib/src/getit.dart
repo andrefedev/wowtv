@@ -2,12 +2,12 @@ import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:wowtv/src/api/repository.dart';
 
 import 'conf.dart';
 import 'router.dart';
 import 'api/api.dart';
-import 'api/storagesvc.dart';
+import 'bloc/bloc.dart';
+import 'api/repository.dart';
 import 'api/storagesvc.dart';
 import 'features/app/app.dart';
 
@@ -52,4 +52,11 @@ void setup() {
   getIt.registerLazySingleton<AppBloc>(() => AppBloc(reposvc: getIt(), storage: getIt()));
 
   getIt.registerLazySingleton<AppGoRouter>(() => AppGoRouter(appBloc: getIt<AppBloc>()));
+
+  // COMM BLOC'S
+
+  getIt.registerFactory<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<Repository>()));
+  //
+  // getIt.registerLazySingleton<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<Repository>()),
+  //     instanceName: "testing");
 }

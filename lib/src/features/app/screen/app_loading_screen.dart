@@ -1,4 +1,6 @@
+import 'package:wowtv/src/conf.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppLoadingScreen extends StatelessWidget {
   final bool opaque;
@@ -14,14 +16,7 @@ class AppLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    Color color = Colors.white;
-    if (opaque) color = Colors.black54;
-
     return Material(
-      color: color,
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -29,7 +24,6 @@ class AppLoadingScreen extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 32.0,
-              backgroundColor: Colors.black12,
               child: _IconVideoPulse(
                 key: Key("_IconVideoPulse"),
               ),
@@ -38,11 +32,17 @@ class AppLoadingScreen extends StatelessWidget {
               height: 16.0,
             ),
             SizedBox(
-              width: 60.0,
+              width: 80.0,
               child: LinearProgressIndicator(
-                color: colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16.0),
               ),
+            ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            Text(
+              AppConfig.appName,
+              style: GoogleFonts.oswald(fontSize: 28),
             ),
           ],
         ),
@@ -97,10 +97,10 @@ class _IconVideoPulseState extends State<_IconVideoPulse> with SingleTickerProvi
       builder: (context, child) {
         return Transform.scale(
           scale: _animation.value,
-          child:  Icon(
+          child:  const Icon(
             Icons.video_collection,
             size: 28.0,
-            color: Colors.red,
+            // color: Colors.red,
           ),
         );
       },

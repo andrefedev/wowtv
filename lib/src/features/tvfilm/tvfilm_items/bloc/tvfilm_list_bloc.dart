@@ -68,54 +68,54 @@ class TvFilmListBloc extends Bloc<TvFilmListEvent, TvFilmListState> {
   }
 
   _onFetched(TvFilmListEventFetched event, Emitter<TvFilmListState> emit) async {
-    try {
-      emit(state.copyWith(
-        status: state.status.copyWith(
-          reason: TvFilmListReason.loading,
-        ),
-      ));
-      await _reposvc.tvfilmListAll(20, 0).then((items) {
-        emit(state.copyWith(
-          items: items,
-          status: state.status.copyWith(
-            reason: TvFilmListReason.loaded,
-          ),
-        ));
-      });
-    } on HttpException catch (e) {
-      emit(state.copyWith(
-        status: state.status.copyWith(
-          err: e.message,
-          reason: TvFilmListReason.failLoading,
-        ),
-      ));
-    }
+    // try {
+    //   emit(state.copyWith(
+    //     status: state.status.copyWith(
+    //       reason: TvFilmListReason.loading,
+    //     ),
+    //   ));
+    //   await _reposvc.tvfilmListAll(20, 0).then((items) {
+    //     emit(state.copyWith(
+    //       items: items,
+    //       status: state.status.copyWith(
+    //         reason: TvFilmListReason.loaded,
+    //       ),
+    //     ));
+    //   });
+    // } on HttpException catch (e) {
+    //   emit(state.copyWith(
+    //     status: state.status.copyWith(
+    //       err: e.message,
+    //       reason: TvFilmListReason.failLoading,
+    //     ),
+    //   ));
+    // }
   }
 
   _onFetched2(TvFilmListEventFetched2 event, Emitter<TvFilmListState> emit) async {
     if (state.max) {
       return;
     }
-    try {
-      emit(state.copyWith(
-        status: state.status.copyWith(
-          reason: TvFilmListReason.loading2,
-        ),
-      ));
-      await _reposvc.tvfilmListAll(20, state.items.length).then((items) {
-        emit(state.copyWith(
-          max: 20 > items.length,
-          items: List.of(state.items)..addAll(items),
-          status: state.status.copyWith(reason: TvFilmListReason.loaded2),
-        ));
-      });
-    } on HttpException catch (e) {
-      emit(state.copyWith(
-        status: state.status.copyWith(
-          err: e.message,
-          reason: TvFilmListReason.failLoading2,
-        ),
-      ));
-    }
+    // try {
+    //   emit(state.copyWith(
+    //     status: state.status.copyWith(
+    //       reason: TvFilmListReason.loading2,
+    //     ),
+    //   ));
+    //   await _reposvc.tvfilmListAll(20, state.items.length).then((items) {
+    //     emit(state.copyWith(
+    //       max: 20 > items.length,
+    //       items: List.of(state.items)..addAll(items),
+    //       status: state.status.copyWith(reason: TvFilmListReason.loaded2),
+    //     ));
+    //   });
+    // } on HttpException catch (e) {
+    //   emit(state.copyWith(
+    //     status: state.status.copyWith(
+    //       err: e.message,
+    //       reason: TvFilmListReason.failLoading2,
+    //     ),
+    //   ));
+    // }
   }
 }

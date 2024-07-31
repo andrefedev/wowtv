@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'api.dart';
+import 'data.dart';
 import 'model.dart';
 import 'dart:convert';
 
@@ -36,7 +37,6 @@ class Repository {
     return jsonDecode(result.body) as String;
   }
 
-
   // ###########
   // # TV FILM #
   // ###########
@@ -49,15 +49,19 @@ class Repository {
     return TvFilm.fromJson(jsonDecode(result.body));
   }
 
-  /// [GET] /brands
-  /// función que permite recuperar todas las marcas.
-  /// está función permite paginar los resultados.
-  Future<List<TvFilm>> tvfilmListAll(int limit, int offset) async {
+  /// [GET] /films
+  /// función que permite recuperar todas las películas.
+  /// está función permite paginar agregar filtros, clasificación y paginación
+  /// para obtener una recuperación más personalizada.
+  Future<List<TvFilm>> tvfilmListAll(TvFilterData filter, {int limit = 20, int offset = 0}) async {
     const path = "/films";
-    final query = {"limit": "$limit", "offset": "$offset"};
+    var query = {"limit": "$limit", "offset": "$offset"};
+    if (filter.main != null) query.addAll({"main": "${filter.main}"});
+    if (filter.type != null) query.addAll({"type": filter.type!.name});
+    if (filter.genre != null) query.addAll({"genre": filter.genre!});
+    if (filter.rating != null) query.addAll({"rating": filter.rating!.name});
+    if (filter.orderBy != null) query.addAll({"order_by": filter.orderBy!.name});
     final result = await _fetch.get(_fetch.uri(path, query: query));
     return (jsonDecode(result.body) as List<dynamic>).map((json) => TvFilm.fromJson(json)).toList();
   }
-
-
 }

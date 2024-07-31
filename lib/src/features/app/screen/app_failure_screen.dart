@@ -19,11 +19,9 @@ class AppFailureScreen extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 32.0,
-                  backgroundColor: Colors.black12,
                   child: Icon(
                     Icons.heart_broken,
                     size: 28.0,
-                    color: Colors.red,
                   ),
                 ),
                 RetryList(
