@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'conf.dart';
 import 'router.dart';
 import 'api/api.dart';
-import 'bloc/bloc.dart';
+import 'comm/comm.dart';
 import 'api/repository.dart';
 import 'api/storagesvc.dart';
 import 'features/app/app.dart';
@@ -55,8 +55,7 @@ void setup() {
 
   // COMM BLOC'S
 
+  getIt.registerFactory<TvFilmMainBloc>(() => TvFilmMainBloc(reposvc: getIt<Repository>()));
+
   getIt.registerFactory<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<Repository>()));
-  //
-  // getIt.registerLazySingleton<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<Repository>()),
-  //     instanceName: "testing");
 }

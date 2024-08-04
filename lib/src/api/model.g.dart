@@ -28,10 +28,11 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 
 TvFilm _$TvFilmFromJson(Map<String, dynamic> json) => TvFilm(
       ref: json['ref'] as String,
-      main: json['main'] as bool,
       type: $enumDecode(_$TvTypeEnumMap, json['type']),
       name1: json['name1'] as String,
       name2: json['name2'] as String,
+      genres:
+          (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList(),
       tagline: json['tagline'] as String,
       runtime: (json['runtime'] as num).toInt(),
       voteavg: (json['voteavg'] as num).toDouble(),
@@ -45,10 +46,10 @@ TvFilm _$TvFilmFromJson(Map<String, dynamic> json) => TvFilm(
 
 Map<String, dynamic> _$TvFilmToJson(TvFilm instance) => <String, dynamic>{
       'ref': instance.ref,
-      'main': instance.main,
       'type': _$TvTypeEnumMap[instance.type]!,
       'name1': instance.name1,
       'name2': instance.name2,
+      'genres': instance.genres,
       'tagline': instance.tagline,
       'runtime': instance.runtime,
       'voteavg': instance.voteavg,

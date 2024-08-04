@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:uuid/uuid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:equatable/equatable.dart';
@@ -9,6 +7,7 @@ import 'package:wowtv/src/api/api.dart';
 import 'package:wowtv/src/api/model.dart';
 import 'package:wowtv/src/api/repository.dart';
 import 'package:wowtv/src/api/storagesvc.dart';
+import 'package:wowtv/src/features/app/app.dart';
 
 part 'app_event.dart';
 
@@ -44,6 +43,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           reason: AppReason.loading,
         ),
       ));
+
+      // ############
+      // # APP INFO #
+      // ############
+
 
       // ############
       // # ID TOKEN #

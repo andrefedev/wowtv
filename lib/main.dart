@@ -37,6 +37,7 @@ Future<void> main() async {
     GoogleFonts.roboto(),
     GoogleFonts.oswald(),
     GoogleFonts.bebasNeue(),
+    GoogleFonts.robotoCondensed()
   ]);
 
   // GetIt Initialized

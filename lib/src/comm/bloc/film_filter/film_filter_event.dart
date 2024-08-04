@@ -29,22 +29,16 @@ class TvFilmFilterEventFetched2 extends TvFilmFilterEvent {
   const TvFilmFilterEventFetched2();
 }
 
-// FILTER'S SELECT
+// FILTER'S SELECT _onSelectedReleaseDate
 
-class TvFilmFilterEventSelectedMain extends  TvFilmFilterEvent {
-  final bool? value;
-
-  const TvFilmFilterEventSelectedMain([this.value]);
-
-  @override
-  List<Object?> get props => [value];
+class TvFilmFilterEventSelectedMovieReleaseDate extends TvFilmFilterEvent {
+  const TvFilmFilterEventSelectedMovieReleaseDate();
 }
 
-class TvFilmFilterEventSelectedGenre extends  TvFilmFilterEvent {
-  final String? value;
+class TvFilmFilterEventSelectedSerieRatingToday extends TvFilmFilterEvent {
+  const TvFilmFilterEventSelectedSerieRatingToday();
+}
 
-  const TvFilmFilterEventSelectedGenre([this.value]);
-
-  @override
-  List<Object?> get props => [value];
+class TvFilmFilterEventSelectedMovieRatingToday extends TvFilmFilterEvent {
+  const TvFilmFilterEventSelectedMovieRatingToday();
 }

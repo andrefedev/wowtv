@@ -7,47 +7,43 @@ part 'data.g.dart';
 
 @JsonSerializable()
 class TvFilterData extends Equatable {
-  final bool? main;
   final TvType? type;
   final String? genre;
-  final Rating? rating; // filtrar por popularidad (fecha)
-  final OrderBy? orderBy; // orderBy se puede filtrar por numero de vistas
+  final Rating? rating;
+  final OrderBy? orderBy;
+  final int? pageLimit;
+  final int? pageOffset;
 
   const TvFilterData({
-    this.main,
     this.type,
     this.genre,
     this.rating,
     this.orderBy,
+    this.pageLimit = 20,
+    this.pageOffset = 0,
   });
 
   Map<String, dynamic> toJson() => _$TvFilterDataToJson(this);
 
   factory TvFilterData.fromJson(Map<String, dynamic> json) => _$TvFilterDataFromJson(json);
 
-  factory TvFilterData.test() {
-    return const TvFilterData(
-      type: TvType.movie,
-      orderBy: OrderBy.mostRelevant,
-    );
-  }
-
   copyWith({
-    bool? main,
     TvType? type,
     String? genre,
     Rating? rating,
     OrderBy? orderBy,
+    int? pageLimit,
+    int? pageOffset,
   }) {
     return TvFilterData(
-      main: main ?? this.main,
-      type: type ?? this.type,
-      genre: genre ?? this.genre,
-      rating: rating ?? this.rating,
-      orderBy: orderBy ?? this.orderBy,
-    );
+        type: type ?? this.type,
+        genre: genre ?? this.genre,
+        rating: rating ?? this.rating,
+        orderBy: orderBy ?? this.orderBy,
+        pageLimit: pageLimit ?? this.pageLimit,
+        pageOffset: pageOffset ?? this.pageOffset);
   }
 
   @override
-  List<Object?> get props => [main, type, genre, rating, orderBy];
+  List<Object?> get props => [type, genre, rating, orderBy, pageLimit, pageOffset];
 }

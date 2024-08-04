@@ -7,7 +7,7 @@ class AppConfig {
 
   static const appName = "WOWTV";
 
-  static const apiHost = "http://192.168.1.23:8080";
+  static const apiHost = "http://192.168.1.74:8080";
 
   static const idToken = "05cf7ec9171eeb806e4797abeffd874a";
   static const storeKey = "6238ee6fc88fd9fe0e1cdc7d7f113973";

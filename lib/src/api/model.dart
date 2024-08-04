@@ -36,10 +36,10 @@ class User extends Equatable {
 @JsonSerializable()
 class TvFilm extends Equatable {
   final String ref;
-  final bool main;
   final TvType type;
   final String name1;
   final String name2;
+  final List<String>? genres;
   final String tagline;
   final int runtime;
   final double voteavg;
@@ -52,10 +52,10 @@ class TvFilm extends Equatable {
 
   const TvFilm({
     required this.ref,
-    required this.main,
     required this.type,
     required this.name1,
     required this.name2,
+    required this.genres,
     required this.tagline,
     required this.runtime,
     required this.voteavg,
@@ -75,9 +75,9 @@ class TvFilm extends Equatable {
   List<Object?> get props => [
         ref,
         type,
-        main,
         name1,
         name2,
+        genres,
         tagline,
         runtime,
         voteavg,

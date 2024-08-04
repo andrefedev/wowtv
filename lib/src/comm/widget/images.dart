@@ -14,6 +14,7 @@ class ImageNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FadeInImage
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return source == null || source!.isEmpty

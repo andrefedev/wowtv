@@ -23,7 +23,7 @@ class AppPage extends Equatable {
 const NavigationBarDestinations = [
   AppPage(
     name: 'Inicio',
-    screen: HomeScreen(),
+    screen: HomePage(),
     iconData: Icons.home_max,
     iconDataSelected: Icons.home_max,
   ),
