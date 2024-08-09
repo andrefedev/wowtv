@@ -71,6 +71,9 @@ void setup() {
   getIt.registerFactoryParam<TvFilmDetailBloc, TvFilm, void>(
       (film, _) => TvFilmDetailBloc(item: film, reposvc: getIt<ApiClient>()));
 
+  getIt.registerFactoryParam<TvFilmCastBloc, TvFilm, void>(
+          (film, _) => TvFilmCastBloc(film: film, reposvc: getIt<ApiClient>()));
+
   getIt.registerFactoryParam<TvFilmImageBloc, TvFilm, void>(
           (film, _) => TvFilmImageBloc(film: film, reposvc: getIt<ApiClient>()));
 

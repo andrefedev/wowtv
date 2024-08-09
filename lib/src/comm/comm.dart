@@ -8,9 +8,10 @@ export 'bloc/film_filter/film_filter_bloc.dart';
 export 'bloc/film_rating/film_rating_bloc.dart';
 
 // PAGES
+export 'pages/film.dart';
 export 'pages/film_image.dart';
 export 'pages/film_media.dart';
-export 'pages/film_detail.dart';
+export 'pages/film_people.dart';
 
 // WIDGET'S
 export 'widgets/covers.dart';

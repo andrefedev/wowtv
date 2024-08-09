@@ -1,7 +1,33 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:wowtv/src/api/api.dart';
 import 'package:wowtv/src/comm/comm.dart';
+
+class TvFilmDetailImage extends StatelessWidget {
+  const TvFilmDetailImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TvFilmImageBloc, TvFilmImageState>(
+      builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            SliverOverlapInjector(
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            ),
+            SliverFillRemaining(
+              // hasScrollBody: false, // Evita el scroll adicional
+              child: Center(
+                child: Text("Nada que mostrar"),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
 class TvFilmImageCover extends StatelessWidget {
   final TvFilmImage image;
@@ -10,7 +36,6 @@ class TvFilmImageCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     debugPrint("image ${image.filePath2}");
 
     return ClipRRect(

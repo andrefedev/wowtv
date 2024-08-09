@@ -6,6 +6,8 @@ extension UserModel on User {
 }
 
 extension TvFilmModel on TvFilm {
+  int get year => releaseDate.toDateTime().year;
+
   String get posterPath => posterPath2;
 
   String get backdropPath => backdpPath2.isEmpty ? posterPath : backdpPath2;
@@ -22,6 +24,8 @@ extension TvFilmModel on TvFilm {
 }
 
 extension TvTypeModel on TvType {
+
+
   String? get label {
     switch (this) {
       case TvType.SERIE:
