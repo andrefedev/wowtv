@@ -4,38 +4,38 @@ import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'film_media_event.dart';
+part 'film_image_event.dart';
 
-part 'film_media_state.dart';
+part 'film_image_state.dart';
 
-part 'film_media_status.dart';
+part 'film_image_status.dart';
 
-class TvFilmMediaBloc extends Bloc<TvFilmMediaEvent, TvFilmMediaState> {
+class TvFilmImageBloc extends Bloc<TvFilmImageEvent, TvFilmImageState> {
   final TvFilm film;
   final ApiClient _reposvc;
 
-  TvFilmMediaBloc({
+  TvFilmImageBloc({
     required this.film,
     required ApiClient reposvc,
   })  : _reposvc = reposvc,
-        super(const TvFilmMediaState()) {
-    on<TvFilmMediaEventFetched>(_onFetched);
+        super(const TvFilmImageState()) {
+    on<TvFilmImageEventFetched>(_onFetched);
   }
 
-  _onFetched(TvFilmMediaEventFetched event, Emitter<TvFilmMediaState> emit) async {
+  _onFetched(TvFilmImageEventFetched event, Emitter<TvFilmImageState> emit) async {
     try {
       emit(state.copyWith(
         status: state.status.copyWith(
-          reason: TvFilmMediaReason.fetching,
+          reason: TvFilmImageReason.fetching,
         ),
       ));
-      // await Future.delayed(const Duration(minutes: 1));
-      final req = TvFilmMediaListAllReq(film: film.ref);
-      await _reposvc.tvFilmMediaListAll(req).then((result) {
+      await Future.delayed(const Duration(seconds: 5));
+      final req = TvFilmImageListAllReq(film: film.ref);
+      await _reposvc.tvFilmImageListAll(req).then((result) {
         emit(state.copyWith(
           items: result.results,
           status: state.status.copyWith(
-            reason: TvFilmMediaReason.fetched,
+            reason: TvFilmImageReason.fetched,
           ),
         ));
       });
@@ -43,7 +43,7 @@ class TvFilmMediaBloc extends Bloc<TvFilmMediaEvent, TvFilmMediaState> {
       emit(state.copyWith(
         status: state.status.copyWith(
           err: e.message,
-          reason: TvFilmMediaReason.failFetching,
+          reason: TvFilmImageReason.failFetching,
         ),
       ));
     }

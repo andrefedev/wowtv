@@ -4,38 +4,38 @@ import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'film_media_event.dart';
+part 'film_cast_event.dart';
 
-part 'film_media_state.dart';
+part 'film_cast_state.dart';
 
-part 'film_media_status.dart';
+part 'film_cast_status.dart';
 
-class TvFilmMediaBloc extends Bloc<TvFilmMediaEvent, TvFilmMediaState> {
+class TvFilmCastBloc extends Bloc<TvFilmCastEvent, TvFilmCastState> {
   final TvFilm film;
   final ApiClient _reposvc;
 
-  TvFilmMediaBloc({
+  TvFilmCastBloc({
     required this.film,
     required ApiClient reposvc,
   })  : _reposvc = reposvc,
-        super(const TvFilmMediaState()) {
-    on<TvFilmMediaEventFetched>(_onFetched);
+        super(const TvFilmCastState()) {
+    on<TvFilmCastEventFetched>(_onFetched);
   }
 
-  _onFetched(TvFilmMediaEventFetched event, Emitter<TvFilmMediaState> emit) async {
+  _onFetched(TvFilmCastEventFetched event, Emitter<TvFilmCastState> emit) async {
     try {
       emit(state.copyWith(
         status: state.status.copyWith(
-          reason: TvFilmMediaReason.fetching,
+          reason: TvFilmCastReason.fetching,
         ),
       ));
-      // await Future.delayed(const Duration(minutes: 1));
-      final req = TvFilmMediaListAllReq(film: film.ref);
-      await _reposvc.tvFilmMediaListAll(req).then((result) {
+      await Future.delayed(const Duration(seconds: 5));
+      final req = TvFilmCastListAllReq(film: film.ref);
+      await _reposvc.tvFilmCastListAll(req).then((result) {
         emit(state.copyWith(
           items: result.results,
           status: state.status.copyWith(
-            reason: TvFilmMediaReason.fetched,
+            reason: TvFilmCastReason.fetched,
           ),
         ));
       });
@@ -43,7 +43,7 @@ class TvFilmMediaBloc extends Bloc<TvFilmMediaEvent, TvFilmMediaState> {
       emit(state.copyWith(
         status: state.status.copyWith(
           err: e.message,
-          reason: TvFilmMediaReason.failFetching,
+          reason: TvFilmCastReason.failFetching,
         ),
       ));
     }
