@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final dark = ThemeData(
     fontFamily: "Roboto",
-    brightness: Brightness.dark,
-    colorSchemeSeed: Colors.blue.shade900,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.black,
+      brightness: Brightness.dark,
+    ).copyWith(
+      primary: Colors.green,
+      secondary: Colors.blue,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
     // ThemeData
@@ -15,7 +20,7 @@ class AppTheme {
     // snackBarTheme:
   );
 
-  static const  appBarTheme = AppBarTheme(
+  static const appBarTheme = AppBarTheme(
     elevation: 2,
     // backgroundColor: Colors.w,
     // shadowColor: Colors.black12,

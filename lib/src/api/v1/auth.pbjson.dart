@@ -23,7 +23,7 @@ const User$json = {
     {'1': 'isPrime', '3': 4, '4': 1, '5': 8, '10': 'isPrime'},
     {'1': 'isActive', '3': 5, '4': 1, '5': 8, '10': 'isActive'},
     {'1': 'lastLogin', '3': 6, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'lastLogin'},
-    {'1': 'joinedDaate', '3': 7, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'joinedDaate'},
+    {'1': 'joinedDate', '3': 7, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'joinedDate'},
   ],
 };
 
@@ -32,8 +32,8 @@ final $typed_data.Uint8List userDescriptor = $convert.base64Decode(
     'CgRVc2VyEhAKA3JlZhgBIAEoCVIDcmVmEhgKB2lkVG9rZW4YAiABKAlSB2lkVG9rZW4SGAoHaX'
     'NBZG1pbhgDIAEoCFIHaXNBZG1pbhIYCgdpc1ByaW1lGAQgASgIUgdpc1ByaW1lEhoKCGlzQWN0'
     'aXZlGAUgASgIUghpc0FjdGl2ZRI4CglsYXN0TG9naW4YBiABKAsyGi5nb29nbGUucHJvdG9idW'
-    'YuVGltZXN0YW1wUglsYXN0TG9naW4SPAoLam9pbmVkRGFhdGUYByABKAsyGi5nb29nbGUucHJv'
-    'dG9idWYuVGltZXN0YW1wUgtqb2luZWREYWF0ZQ==');
+    'YuVGltZXN0YW1wUglsYXN0TG9naW4SOgoKam9pbmVkRGF0ZRgHIAEoCzIaLmdvb2dsZS5wcm90'
+    'b2J1Zi5UaW1lc3RhbXBSCmpvaW5lZERhdGU=');
 
 @$core.Deprecated('Use userMeReqDescriptor instead')
 const UserMeReq$json = {

@@ -1,12 +1,12 @@
+import 'package:grpc/grpc.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:wowtv/src/api/api.dart';
-import 'package:wowtv/src/api/model.dart';
-import 'package:wowtv/src/api/repository.dart';
 import 'package:wowtv/src/api/storagesvc.dart';
+import 'package:wowtv/src/api/v1/base.pb.dart';
 import 'package:wowtv/src/features/app/app.dart';
 
 part 'app_event.dart';
@@ -18,11 +18,11 @@ part 'app_status.dart';
 const uuid = Uuid();
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  final Repository _reposvc;
+  final ApiClient _reposvc;
   final SecureStorage _storage;
 
   AppBloc({
-    required Repository reposvc,
+    required ApiClient reposvc,
     required SecureStorage storage,
   })  : _reposvc = reposvc,
         _storage = storage,
@@ -48,6 +48,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       // # APP INFO #
       // ############
 
+      final req = AppInfoReq();
+      final info = await _reposvc.appInfo(req);
 
       // ############
       // # ID TOKEN #
@@ -56,23 +58,25 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       String? idToken;
       idToken = await _storage.getIdToken();
       if (idToken == null) {
-        idToken = await _reposvc.idToken();
-        await _storage.setIdToken(idToken);
+        final req = UserTokenReq();
+        final res = await _reposvc.userToken(req);
+        await _storage.setIdToken(res.idToken);
+        idToken = res.idToken;
       }
 
-      // #################
-      // # FETCH USER ME #
-      // #################
-
-      await _reposvc.userme(idToken).then((user) {
+      // ###########
+      // # USER ME #
+      // ###########
+      await _reposvc.userMe(UserMeReq()).then((user) {
         emit(state.copyWith(
-          user: user,
+          user: user.result,
+          info: info.result,
           status: state.status.copyWith(
             reason: AppReason.loaded,
           ),
         ));
       });
-    } on HttpException catch (e) {
+    } on GrpcError catch (e) {
       emit(state.copyWith(
         status: state.status.copyWith(
           err: e.message,

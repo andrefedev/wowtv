@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+
 import 'package:wowtv/src/features/app/app.dart';
+import 'package:wowtv/src/features/settings/settings.dart';
 
 class AppPage extends Equatable {
   final String name;
@@ -23,20 +25,14 @@ class AppPage extends Equatable {
 const NavigationBarDestinations = [
   AppPage(
     name: 'Inicio',
-    screen: HomePage(),
+    screen: HomeScreen(),
     iconData: Icons.home_max,
     iconDataSelected: Icons.home_max,
   ),
   AppPage(
-    name: 'Buscar',
+    name: 'Mi lista',
     screen: Scaffold(),
-    iconData: Icons.search,
-    iconDataSelected: Icons.search,
-  ),
-  AppPage(
-    name: 'Popular',
-    screen: Scaffold(),
-    iconData: Icons.star_border,
+    iconData: Icons.playlist_play,
     iconDataSelected: Icons.star_border,
   ),
   AppPage(

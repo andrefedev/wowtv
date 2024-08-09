@@ -1,42 +1,43 @@
-import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:wowtv/src/api/api.dart';
-import 'package:wowtv/src/api/model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'film_main_event.dart';
+part 'film_item_event.dart';
 
-part 'film_main_state.dart';
+part 'film_item_state.dart';
 
-part 'film_main_status.dart';
+part 'film_item_status.dart';
 
-class TvFilmMainBloc extends Bloc<TvFilmMainEvent, TvFilmMainState> {
+class TvFilmDetailBloc extends Bloc<TvFilmDetailEvent, TvFilmDetailState> {
   final ApiClient _reposvc;
 
-  TvFilmMainBloc({
+  TvFilmDetailBloc({
+    required TvFilm item,
     required ApiClient reposvc,
   })  : _reposvc = reposvc,
-        super(const TvFilmMainState()) {
-    on<TvFilmMainEventFetched>(_onFetched);
+        super(TvFilmDetailState(item)) {
+    on<TvFilmDetailEventFetched>(_onFetched);
   }
 
   // _onReseted(TvFilmMainEventReseted event, Emitter<TvFilmMainState>)
 
-  _onFetched(TvFilmMainEventFetched event, Emitter<TvFilmMainState> emit) async {
+  _onFetched(TvFilmDetailEventFetched event, Emitter<TvFilmDetailState> emit) async {
     try {
       emit(state.copyWith(
         status: state.status.copyWith(
-          reason: TvFilmMainReason.fetching,
+          reason: TvFilmDetailReason.fetching,
         ),
       ));
 
-      final req = TvFilmMainRandomReq();
-      await _reposvc.tvFilmMainRandom(req).then((res) {
+      final ref = state.item.ref;
+      final req = TvFilmDetailReq(ref: ref);
+      await _reposvc.tvFilmDetail(req).then((res) {
         emit(state.copyWith(
           item: res.result,
           status: state.status.copyWith(
-            reason: TvFilmMainReason.fetched,
+            reason: TvFilmDetailReason.fetched,
           ),
         ));
       });
@@ -44,7 +45,7 @@ class TvFilmMainBloc extends Bloc<TvFilmMainEvent, TvFilmMainState> {
       emit(state.copyWith(
         status: state.status.copyWith(
           err: e.message,
-          reason: TvFilmMainReason.failFetching,
+          reason: TvFilmDetailReason.failFetching,
         ),
       ));
     }

@@ -14,14 +14,14 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class TvType extends $pb.ProtobufEnum {
-  static const TvType None = TvType._(0, _omitEnumNames ? '' : 'None');
-  static const TvType Movie = TvType._(1, _omitEnumNames ? '' : 'Movie');
-  static const TvType Serie = TvType._(2, _omitEnumNames ? '' : 'Serie');
+  static const TvType NONE = TvType._(0, _omitEnumNames ? '' : 'NONE');
+  static const TvType MOVIE = TvType._(1, _omitEnumNames ? '' : 'MOVIE');
+  static const TvType SERIE = TvType._(2, _omitEnumNames ? '' : 'SERIE');
 
   static const $core.List<TvType> values = <TvType> [
-    None,
-    Movie,
-    Serie,
+    NONE,
+    MOVIE,
+    SERIE,
   ];
 
   static final $core.Map<$core.int, TvType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -31,18 +31,18 @@ class TvType extends $pb.ProtobufEnum {
 }
 
 class OrderBy extends $pb.ProtobufEnum {
-  static const OrderBy Unknown = OrderBy._(0, _omitEnumNames ? '' : 'Unknown');
-  static const OrderBy MostRecent = OrderBy._(1, _omitEnumNames ? '' : 'MostRecent');
-  static const OrderBy MostValued = OrderBy._(2, _omitEnumNames ? '' : 'MostValued');
-  static const OrderBy MostPopular = OrderBy._(3, _omitEnumNames ? '' : 'MostPopular');
-  static const OrderBy MostRelevant = OrderBy._(4, _omitEnumNames ? '' : 'MostRelevant');
+  static const OrderBy MOST_NONE = OrderBy._(0, _omitEnumNames ? '' : 'MOST_NONE');
+  static const OrderBy MOST_RECENT = OrderBy._(1, _omitEnumNames ? '' : 'MOST_RECENT');
+  static const OrderBy MOST_VALUED = OrderBy._(2, _omitEnumNames ? '' : 'MOST_VALUED');
+  static const OrderBy MOST_POPULAR = OrderBy._(3, _omitEnumNames ? '' : 'MOST_POPULAR');
+  static const OrderBy MOST_RELEVANT = OrderBy._(4, _omitEnumNames ? '' : 'MOST_RELEVANT');
 
   static const $core.List<OrderBy> values = <OrderBy> [
-    Unknown,
-    MostRecent,
-    MostValued,
-    MostPopular,
-    MostRelevant,
+    MOST_NONE,
+    MOST_RECENT,
+    MOST_VALUED,
+    MOST_POPULAR,
+    MOST_RELEVANT,
   ];
 
   static final $core.Map<$core.int, OrderBy> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -1,178 +1,62 @@
-import 'dart:io';
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer' as dev;
-import 'package:flutter/foundation.dart';
 
-import 'package:http/retry.dart';
-import 'package:http/http.dart' as http;
+import 'package:grpc/grpc.dart';
 
-part 'api.e.dart';
+export 'v1/api.pb.dart';
+export 'v1/auth.pb.dart';
+export 'v1/base.pb.dart';
+export 'v1/wplay.pb.dart';
+export 'v1/api.pbgrpc.dart';
+
+// ignore: non_constant_identifier_names
+var CHANNEL_OPTIONS = ChannelOptions(
+  idleTimeout: const Duration(seconds: 60),
+  connectTimeout: const Duration(seconds: 30),
+  connectionTimeout: const Duration(seconds: 60),
+  // credentials: const ChannelCredentials.secure(),
+  credentials: const ChannelCredentials.insecure(),
+  codecRegistry: CodecRegistry(
+    codecs: [
+      const GzipCodec(),
+      const IdentityCodec(),
+    ],
+  ),
+);
 
 /// Signature for the authentication token provider.
 typedef AuthProvider = Future<String?> Function();
 
-class HttpService extends http.BaseClient {
-  final String _baseUrl;
+class AuthTokenMiddleware implements ClientInterceptor {
   final AuthProvider _getIdToken;
 
-  HttpService({
-    required String baseUrl,
-    required AuthProvider getIdToken,
-  })  : _baseUrl = baseUrl,
-        _getIdToken = getIdToken;
-
-  final http.Client _client = RetryClient(http.Client());
+  const AuthTokenMiddleware(
+      AuthProvider authProvider,
+      ) : _getIdToken = authProvider;
 
   @override
-  void close() {
-    _client.close();
-  }
-
-  Uri uri(String path, {Map<String, String>? query}) {
-    return Uri.parse(_baseUrl + path).replace(queryParameters: query);
+  ResponseStream<R> interceptStreaming<Q, R>(
+      ClientMethod<Q, R> method,
+      Stream<Q> requests,
+      CallOptions options,
+      ClientStreamingInvoker<Q, R> invoker,
+      ) {
+    final opts = CallOptions(providers: [_handleToken]);
+    return invoker(method, requests, options.mergedWith(opts));
   }
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    // logging
-    logRequest(request.method, request.url);
+  ResponseFuture<R> interceptUnary<Q, R>(
+      ClientMethod<Q, R> method,
+      Q request,
+      CallOptions options,
+      ClientUnaryInvoker<Q, R> invoker,
+      ) {
+    final opts = CallOptions(providers: [_handleToken]);
+    return invoker(method, request, options.mergedWith(opts));
+  }
 
-    // custom headers
-    request.headers[HttpHeaders.contentTypeHeader] = ContentType.json.value;
-    request.headers[HttpHeaders.acceptEncodingHeader] = ContentType.json.value;
-
-    // auth add token to request
+  FutureOr<void> _handleToken(Map<String, String> metadata, String uri) async {
     final token = await _getIdToken();
-    if (token != null) {
-      request.headers.putIfAbsent(HttpHeaders.authorizationHeader, () => token);
-    }
-
-    return _client.send(request);
-  }
-
-  @override
-  Future<http.Response> get(Uri url, {Map<String, String>? headers}) => super
-      .get(url, headers: headers)
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  @override
-  Future<http.Response> post(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) => super
-      .post(url, headers: headers, body: body, encoding: encoding)
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  @override
-  Future<http.Response> put(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) => super
-      .put(url, headers: headers, body: body, encoding: encoding)
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  @override
-  Future<http.Response> patch(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) => super
-      .patch(url, headers: headers, body: body, encoding: encoding)
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  @override
-  Future<http.Response> delete(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) => super
-      .delete(url, headers: headers, body: body, encoding: encoding)
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  Future<http.Response> upload(http.MultipartRequest request) => send(request)
-      .then((stream) => http.Response.fromStream(stream))
-      .then((res) => _handleResponse(res))
-      .catchError(_handleSocketException, test: (e) => e is SocketException);
-
-  void logRequest(String method, Uri uri) {
-    dev.log("-- [REQUEST] [$method] ${uri.toString()} --");
-  }
-
-  void logResponse(String? method, int status, Uri? uri) {
-    dev.log("-- [RESPONSE] [$method] [$status] ${uri.toString()} --");
-  }
-
-  http.Response _handleResponse(http.Response res) {
-    // handle error
-    // throw HttpException
-    final req = res.request;
-    final method = req?.method;
-    final statusCode = res.statusCode;
-
-    // logging
-    logResponse(method, statusCode, req?.url);
-
-    // success
-    if (statusCode < 400) return res; // success
-
-    String message;
-    try {
-      message = jsonDecode(res.body);
-    } catch (e) {
-      message = res.body;
-    }
-
-    // Si not found y como no tiene un valor que debo hacer??
-    // Agregar un valor..
-    switch (statusCode) {
-      case (HttpStatus.badRequest):
-        throw HttpException.invalidArgument(message);
-      case (HttpStatus.unauthorized):
-        throw HttpException.unauthenticated(message);
-      case (HttpStatus.forbidden):
-        throw HttpException.permissionDenied(message);
-      case (HttpStatus.notFound):
-        throw HttpException.notFound(message);
-      case (HttpStatus.conflict):
-        throw HttpException.aborted(message);
-      case (HttpStatus.preconditionFailed):
-      case (HttpStatus.unprocessableEntity):
-        throw HttpException.failedPrecondition(message);
-      case (HttpStatus.tooManyRequests):
-        throw HttpException.resourceExhausted(message);
-      case (HttpStatus.clientClosedRequest):
-        throw HttpException.cancelled(message);
-      // case (HttpStatus.internalServerError):
-      //   throw HttpException.internal(message);
-      case (HttpStatus.notImplemented):
-        throw HttpException.unimplemented(message);
-      case (HttpStatus.serviceUnavailable):
-        throw HttpException.unavailable(message);
-      case (HttpStatus.gatewayTimeout):
-        throw HttpException.deadlineExceeded(message);
-      default:
-        throw const HttpException.unknown(
-          "Ocurrió un error desconocido en la comunicación con el servidor. "
-          "Si el problema persiste, por favor comunícate con el equipo de soporte técnico.",
-        );
-    }
-  }
-
-  dynamic _handleSocketException(Object e) {
-    final exec = e as SocketException;
-
-    if (kDebugMode) {
-      dev.log("SocketException: ${exec.message}");
-    }
-
-    throw const HttpException.unknown(
-      "Ocurrió un error en la comunicación con el servidor. "
-      "Si el problema persiste, por favor comunicate con el equipo de soporte técnico.",
-    );
-    // switch (exec.osError?.errorCode) {
-    //   case (100):
-    //     throw const HttpException.unknown(
-    //       "Por favor, verifique la conexión"
-    //       "a internet y vuelva a intentarlo nuevamente.",
-    //     );
-    //   default:
-    //     /// 111 timeout
-    //     throw const HttpException.unknown(
-    //       "Ocurrió un error en la comunicación con el servidor. "
-    //       "Si el problema persiste, por favor contactar al equipo de soporte técnico.",
-    //     );
-    // }
+    if (token != null && token.isNotEmpty) metadata['authorization'] = token;
   }
 }

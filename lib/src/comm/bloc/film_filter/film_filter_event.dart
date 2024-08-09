@@ -8,37 +8,29 @@ sealed class TvFilmFilterEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class TvFilmFilterEventChanged extends TvFilmFilterEvent {
-  final TvFilterData value;
-
-  const TvFilmFilterEventChanged(this.value);
-
-  @override
-  List<Object?> get props => [value];
-}
-
 class TvFilmFilterEventReseted extends TvFilmFilterEvent {
   const TvFilmFilterEventReseted();
 }
 
 class TvFilmFilterEventFetched extends TvFilmFilterEvent {
-  const TvFilmFilterEventFetched();
+  final TvFilmFilter value;
+
+  const TvFilmFilterEventFetched._(this.value);
+
+  factory TvFilmFilterEventFetched() {
+    return TvFilmFilterEventFetched._(
+      TvFilmFilter(
+        type: TvType.MOVIE,
+        orderBy: OrderBy.MOST_RECENT,
+        pageLimit: 20,
+      ),
+    );
+  }
+
+  @override
+  List<Object?> get props => [value];
 }
 
 class TvFilmFilterEventFetched2 extends TvFilmFilterEvent {
   const TvFilmFilterEventFetched2();
-}
-
-// FILTER'S SELECT _onSelectedReleaseDate
-
-class TvFilmFilterEventSelectedMovieReleaseDate extends TvFilmFilterEvent {
-  const TvFilmFilterEventSelectedMovieReleaseDate();
-}
-
-class TvFilmFilterEventSelectedSerieRatingToday extends TvFilmFilterEvent {
-  const TvFilmFilterEventSelectedSerieRatingToday();
-}
-
-class TvFilmFilterEventSelectedMovieRatingToday extends TvFilmFilterEvent {
-  const TvFilmFilterEventSelectedMovieRatingToday();
 }

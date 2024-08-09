@@ -23,7 +23,7 @@ class User extends $pb.GeneratedMessage {
     $core.bool? isPrime,
     $core.bool? isActive,
     $4.Timestamp? lastLogin,
-    $4.Timestamp? joinedDaate,
+    $4.Timestamp? joinedDate,
   }) {
     final $result = create();
     if (ref != null) {
@@ -44,8 +44,8 @@ class User extends $pb.GeneratedMessage {
     if (lastLogin != null) {
       $result.lastLogin = lastLogin;
     }
-    if (joinedDaate != null) {
-      $result.joinedDaate = joinedDaate;
+    if (joinedDate != null) {
+      $result.joinedDate = joinedDate;
     }
     return $result;
   }
@@ -60,7 +60,7 @@ class User extends $pb.GeneratedMessage {
     ..aOB(4, _omitFieldNames ? '' : 'isPrime', protoName: 'isPrime')
     ..aOB(5, _omitFieldNames ? '' : 'isActive', protoName: 'isActive')
     ..aOM<$4.Timestamp>(6, _omitFieldNames ? '' : 'lastLogin', protoName: 'lastLogin', subBuilder: $4.Timestamp.create)
-    ..aOM<$4.Timestamp>(7, _omitFieldNames ? '' : 'joinedDaate', protoName: 'joinedDaate', subBuilder: $4.Timestamp.create)
+    ..aOM<$4.Timestamp>(7, _omitFieldNames ? '' : 'joinedDate', protoName: 'joinedDate', subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -142,15 +142,15 @@ class User extends $pb.GeneratedMessage {
   $4.Timestamp ensureLastLogin() => $_ensure(5);
 
   @$pb.TagNumber(7)
-  $4.Timestamp get joinedDaate => $_getN(6);
+  $4.Timestamp get joinedDate => $_getN(6);
   @$pb.TagNumber(7)
-  set joinedDaate($4.Timestamp v) { setField(7, v); }
+  set joinedDate($4.Timestamp v) { setField(7, v); }
   @$pb.TagNumber(7)
-  $core.bool hasJoinedDaate() => $_has(6);
+  $core.bool hasJoinedDate() => $_has(6);
   @$pb.TagNumber(7)
-  void clearJoinedDaate() => clearField(7);
+  void clearJoinedDate() => clearField(7);
   @$pb.TagNumber(7)
-  $4.Timestamp ensureJoinedDaate() => $_ensure(6);
+  $4.Timestamp ensureJoinedDate() => $_ensure(6);
 }
 
 class UserMeReq extends $pb.GeneratedMessage {

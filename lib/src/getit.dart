@@ -1,3 +1,4 @@
+import 'package:grpc/grpc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,7 +8,6 @@ import 'conf.dart';
 import 'router.dart';
 import 'api/api.dart';
 import 'comm/comm.dart';
-import 'api/repository.dart';
 import 'api/storagesvc.dart';
 import 'features/app/app.dart';
 
@@ -37,11 +37,18 @@ void setup() {
   // (GRPC) API CLIENT #
   // ###################
 
-  getIt.registerLazySingleton<HttpService>(
-      () => HttpService(baseUrl: AppConfig.apiHost, getIdToken: getIt<SecureStorage>().getIdToken),
-      dispose: (ref) => ref.close());
+  getIt.registerLazySingleton<ClientChannel>(
+      () => ClientChannel(AppConfig.apiHost, port: AppConfig.apiPort, options: CHANNEL_OPTIONS),
+      dispose: (client) => client.terminate());
 
-  getIt.registerLazySingleton<Repository>(() => Repository(getIt()));
+  getIt.registerLazySingleton<ApiClient>(
+    () => ApiClient(
+      getIt<ClientChannel>(),
+      interceptors: [
+        AuthTokenMiddleware(getIt<SecureStorage>().getIdToken),
+      ],
+    ),
+  );
 
   // #################
   // # BLOC SERVICES #
@@ -55,7 +62,15 @@ void setup() {
 
   // COMM BLOC'S
 
-  getIt.registerFactory<TvFilmMainBloc>(() => TvFilmMainBloc(reposvc: getIt<Repository>()));
+  getIt.registerFactory<TvFilmMainBloc>(() => TvFilmMainBloc(reposvc: getIt<ApiClient>()));
 
-  getIt.registerFactory<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<Repository>()));
+  getIt.registerFactory<TvFilmFilterBloc>(() => TvFilmFilterBloc(reposvc: getIt<ApiClient>()));
+
+  getIt.registerFactory<TvFilmPopularBloc>(() => TvFilmPopularBloc(reposvc: getIt<ApiClient>()));
+
+  getIt.registerFactoryParam<TvFilmDetailBloc, TvFilm, void>(
+      (film, _) => TvFilmDetailBloc(item: film, reposvc: getIt<ApiClient>()));
+
+  getIt.registerFactoryParam<TvFilmMediaBloc, TvFilm, void>(
+      (film, _) => TvFilmMediaBloc(film: film, reposvc: getIt<ApiClient>()));
 }

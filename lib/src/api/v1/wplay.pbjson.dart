@@ -17,32 +17,32 @@ import 'dart:typed_data' as $typed_data;
 const TvType$json = {
   '1': 'TvType',
   '2': [
-    {'1': 'None', '2': 0},
-    {'1': 'Movie', '2': 1},
-    {'1': 'Serie', '2': 2},
+    {'1': 'NONE', '2': 0},
+    {'1': 'MOVIE', '2': 1},
+    {'1': 'SERIE', '2': 2},
   ],
 };
 
 /// Descriptor for `TvType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List tvTypeDescriptor = $convert.base64Decode(
-    'CgZUdlR5cGUSCAoETm9uZRAAEgkKBU1vdmllEAESCQoFU2VyaWUQAg==');
+    'CgZUdlR5cGUSCAoETk9ORRAAEgkKBU1PVklFEAESCQoFU0VSSUUQAg==');
 
 @$core.Deprecated('Use orderByDescriptor instead')
 const OrderBy$json = {
   '1': 'OrderBy',
   '2': [
-    {'1': 'Unknown', '2': 0},
-    {'1': 'MostRecent', '2': 1},
-    {'1': 'MostValued', '2': 2},
-    {'1': 'MostPopular', '2': 3},
-    {'1': 'MostRelevant', '2': 4},
+    {'1': 'MOST_NONE', '2': 0},
+    {'1': 'MOST_RECENT', '2': 1},
+    {'1': 'MOST_VALUED', '2': 2},
+    {'1': 'MOST_POPULAR', '2': 3},
+    {'1': 'MOST_RELEVANT', '2': 4},
   ],
 };
 
 /// Descriptor for `OrderBy`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List orderByDescriptor = $convert.base64Decode(
-    'CgdPcmRlckJ5EgsKB1Vua25vd24QABIOCgpNb3N0UmVjZW50EAESDgoKTW9zdFZhbHVlZBACEg'
-    '8KC01vc3RQb3B1bGFyEAMSEAoMTW9zdFJlbGV2YW50EAQ=');
+    'CgdPcmRlckJ5Eg0KCU1PU1RfTk9ORRAAEg8KC01PU1RfUkVDRU5UEAESDwoLTU9TVF9WQUxVRU'
+    'QQAhIQCgxNT1NUX1BPUFVMQVIQAxIRCg1NT1NUX1JFTEVWQU5UEAQ=');
 
 @$core.Deprecated('Use genreDescriptor instead')
 const Genre$json = {
@@ -100,6 +100,10 @@ const TvFilm$json = {
     {'1': 'posterPath2', '3': 15, '4': 1, '5': 9, '10': 'posterPath2'},
     {'1': 'backdpPath1', '3': 16, '4': 1, '5': 9, '10': 'backdpPath1'},
     {'1': 'backdpPath2', '3': 17, '4': 1, '5': 9, '10': 'backdpPath2'},
+    {'1': 'casts', '3': 18, '4': 3, '5': 11, '6': '.wowtv.TvFilmCast', '10': 'casts'},
+    {'1': 'crews', '3': 19, '4': 3, '5': 11, '6': '.wowtv.TvFilmCrew', '10': 'crews'},
+    {'1': 'images', '3': 20, '4': 3, '5': 11, '6': '.wowtv.TvFilmImage', '10': 'images'},
+    {'1': 'videos', '3': 21, '4': 3, '5': 11, '6': '.wowtv.TvFilmVideo', '10': 'videos'},
   ],
 };
 
@@ -114,7 +118,10 @@ final $typed_data.Uint8List tvFilmDescriptor = $convert.base64Decode(
     'ZWxlYXNlRGF0ZRI8CgtjcmVhdGVkRGF0ZRgNIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3'
     'RhbXBSC2NyZWF0ZWREYXRlEiAKC3Bvc3RlclBhdGgxGA4gASgJUgtwb3N0ZXJQYXRoMRIgCgtw'
     'b3N0ZXJQYXRoMhgPIAEoCVILcG9zdGVyUGF0aDISIAoLYmFja2RwUGF0aDEYECABKAlSC2JhY2'
-    'tkcFBhdGgxEiAKC2JhY2tkcFBhdGgyGBEgASgJUgtiYWNrZHBQYXRoMg==');
+    'tkcFBhdGgxEiAKC2JhY2tkcFBhdGgyGBEgASgJUgtiYWNrZHBQYXRoMhInCgVjYXN0cxgSIAMo'
+    'CzIRLndvd3R2LlR2RmlsbUNhc3RSBWNhc3RzEicKBWNyZXdzGBMgAygLMhEud293dHYuVHZGaW'
+    'xtQ3Jld1IFY3Jld3MSKgoGaW1hZ2VzGBQgAygLMhIud293dHYuVHZGaWxtSW1hZ2VSBmltYWdl'
+    'cxIqCgZ2aWRlb3MYFSADKAsyEi53b3d0di5UdkZpbG1WaWRlb1IGdmlkZW9z');
 
 @$core.Deprecated('Use tvFilmCrewDescriptor instead')
 const TvFilmCrew$json = {
@@ -206,9 +213,9 @@ final $typed_data.Uint8List tvFilmVideoDescriptor = $convert.base64Decode(
     'NpemUYAyABKAVSBHNpemUSGAoHeW91dHViZRgEIAEoCVIHeW91dHViZRI8CgtwdWJsaXNoZWRB'
     'dBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSC3B1Ymxpc2hlZEF0');
 
-@$core.Deprecated('Use tvFilmListAllReqDescriptor instead')
-const TvFilmListAllReq$json = {
-  '1': 'TvFilmListAllReq',
+@$core.Deprecated('Use tvFilmFilterDescriptor instead')
+const TvFilmFilter$json = {
+  '1': 'TvFilmFilter',
   '2': [
     {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.wowtv.TvType', '9': 0, '10': 'type', '17': true},
     {'1': 'genre', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'genre', '17': true},
@@ -225,13 +232,51 @@ const TvFilmListAllReq$json = {
   ],
 };
 
+/// Descriptor for `TvFilmFilter`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmFilterDescriptor = $convert.base64Decode(
+    'CgxUdkZpbG1GaWx0ZXISJgoEdHlwZRgBIAEoDjINLndvd3R2LlR2VHlwZUgAUgR0eXBliAEBEh'
+    'kKBWdlbnJlGAIgASgJSAFSBWdlbnJliAEBEi0KB29yZGVyQnkYAyABKA4yDi53b3d0di5PcmRl'
+    'ckJ5SAJSB29yZGVyQnmIAQESIQoJcGFnZUxpbWl0GAQgASgNSANSCXBhZ2VMaW1pdIgBARIjCg'
+    'pwYWdlT2Zmc2V0GAUgASgNSARSCnBhZ2VPZmZzZXSIAQFCBwoFX3R5cGVCCAoGX2dlbnJlQgoK'
+    'CF9vcmRlckJ5QgwKCl9wYWdlTGltaXRCDQoLX3BhZ2VPZmZzZXQ=');
+
+@$core.Deprecated('Use tvFilmDetailReqDescriptor instead')
+const TvFilmDetailReq$json = {
+  '1': 'TvFilmDetailReq',
+  '2': [
+    {'1': 'ref', '3': 1, '4': 1, '5': 9, '10': 'ref'},
+  ],
+};
+
+/// Descriptor for `TvFilmDetailReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmDetailReqDescriptor = $convert.base64Decode(
+    'Cg9UdkZpbG1EZXRhaWxSZXESEAoDcmVmGAEgASgJUgNyZWY=');
+
+@$core.Deprecated('Use tvFilmDetailResDescriptor instead')
+const TvFilmDetailRes$json = {
+  '1': 'TvFilmDetailRes',
+  '2': [
+    {'1': 'result', '3': 1, '4': 1, '5': 11, '6': '.wowtv.TvFilm', '10': 'result'},
+  ],
+};
+
+/// Descriptor for `TvFilmDetailRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmDetailResDescriptor = $convert.base64Decode(
+    'Cg9UdkZpbG1EZXRhaWxSZXMSJQoGcmVzdWx0GAEgASgLMg0ud293dHYuVHZGaWxtUgZyZXN1bH'
+    'Q=');
+
+@$core.Deprecated('Use tvFilmListAllReqDescriptor instead')
+const TvFilmListAllReq$json = {
+  '1': 'TvFilmListAllReq',
+  '2': [
+    {'1': 'filter', '3': 1, '4': 1, '5': 11, '6': '.wowtv.TvFilmFilter', '10': 'filter'},
+  ],
+};
+
 /// Descriptor for `TvFilmListAllReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List tvFilmListAllReqDescriptor = $convert.base64Decode(
-    'ChBUdkZpbG1MaXN0QWxsUmVxEiYKBHR5cGUYASABKA4yDS53b3d0di5UdlR5cGVIAFIEdHlwZY'
-    'gBARIZCgVnZW5yZRgCIAEoCUgBUgVnZW5yZYgBARItCgdvcmRlckJ5GAMgASgOMg4ud293dHYu'
-    'T3JkZXJCeUgCUgdvcmRlckJ5iAEBEiEKCXBhZ2VMaW1pdBgEIAEoDUgDUglwYWdlTGltaXSIAQ'
-    'ESIwoKcGFnZU9mZnNldBgFIAEoDUgEUgpwYWdlT2Zmc2V0iAEBQgcKBV90eXBlQggKBl9nZW5y'
-    'ZUIKCghfb3JkZXJCeUIMCgpfcGFnZUxpbWl0Qg0KC19wYWdlT2Zmc2V0');
+    'ChBUdkZpbG1MaXN0QWxsUmVxEisKBmZpbHRlchgBIAEoCzITLndvd3R2LlR2RmlsbUZpbHRlcl'
+    'IGZmlsdGVy');
 
 @$core.Deprecated('Use tvFilmListAllResDescriptor instead')
 const TvFilmListAllRes$json = {
@@ -293,4 +338,104 @@ const TvFilmPopularOfDayListAllRes$json = {
 final $typed_data.Uint8List tvFilmPopularOfDayListAllResDescriptor = $convert.base64Decode(
     'ChxUdkZpbG1Qb3B1bGFyT2ZEYXlMaXN0QWxsUmVzEicKB3Jlc3VsdHMYASADKAsyDS53b3d0di'
     '5UdkZpbG1SB3Jlc3VsdHM=');
+
+@$core.Deprecated('Use tvFilmCastListAllReqDescriptor instead')
+const TvFilmCastListAllReq$json = {
+  '1': 'TvFilmCastListAllReq',
+  '2': [
+    {'1': 'film', '3': 1, '4': 1, '5': 9, '10': 'film'},
+  ],
+};
+
+/// Descriptor for `TvFilmCastListAllReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmCastListAllReqDescriptor = $convert.base64Decode(
+    'ChRUdkZpbG1DYXN0TGlzdEFsbFJlcRISCgRmaWxtGAEgASgJUgRmaWxt');
+
+@$core.Deprecated('Use tvFilmCastListAllResDescriptor instead')
+const TvFilmCastListAllRes$json = {
+  '1': 'TvFilmCastListAllRes',
+  '2': [
+    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.wowtv.TvFilmCast', '10': 'results'},
+  ],
+};
+
+/// Descriptor for `TvFilmCastListAllRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmCastListAllResDescriptor = $convert.base64Decode(
+    'ChRUdkZpbG1DYXN0TGlzdEFsbFJlcxIrCgdyZXN1bHRzGAEgAygLMhEud293dHYuVHZGaWxtQ2'
+    'FzdFIHcmVzdWx0cw==');
+
+@$core.Deprecated('Use tvFilmCrewListAllReqDescriptor instead')
+const TvFilmCrewListAllReq$json = {
+  '1': 'TvFilmCrewListAllReq',
+  '2': [
+    {'1': 'film', '3': 1, '4': 1, '5': 9, '10': 'film'},
+  ],
+};
+
+/// Descriptor for `TvFilmCrewListAllReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmCrewListAllReqDescriptor = $convert.base64Decode(
+    'ChRUdkZpbG1DcmV3TGlzdEFsbFJlcRISCgRmaWxtGAEgASgJUgRmaWxt');
+
+@$core.Deprecated('Use tvFilmCrewListAllResDescriptor instead')
+const TvFilmCrewListAllRes$json = {
+  '1': 'TvFilmCrewListAllRes',
+  '2': [
+    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.wowtv.TvFilmCrew', '10': 'results'},
+  ],
+};
+
+/// Descriptor for `TvFilmCrewListAllRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmCrewListAllResDescriptor = $convert.base64Decode(
+    'ChRUdkZpbG1DcmV3TGlzdEFsbFJlcxIrCgdyZXN1bHRzGAEgAygLMhEud293dHYuVHZGaWxtQ3'
+    'Jld1IHcmVzdWx0cw==');
+
+@$core.Deprecated('Use tvFilmImageListAllReqDescriptor instead')
+const TvFilmImageListAllReq$json = {
+  '1': 'TvFilmImageListAllReq',
+  '2': [
+    {'1': 'film', '3': 1, '4': 1, '5': 9, '10': 'film'},
+  ],
+};
+
+/// Descriptor for `TvFilmImageListAllReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmImageListAllReqDescriptor = $convert.base64Decode(
+    'ChVUdkZpbG1JbWFnZUxpc3RBbGxSZXESEgoEZmlsbRgBIAEoCVIEZmlsbQ==');
+
+@$core.Deprecated('Use tvFilmImageListAllResDescriptor instead')
+const TvFilmImageListAllRes$json = {
+  '1': 'TvFilmImageListAllRes',
+  '2': [
+    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.wowtv.TvFilmImage', '10': 'results'},
+  ],
+};
+
+/// Descriptor for `TvFilmImageListAllRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmImageListAllResDescriptor = $convert.base64Decode(
+    'ChVUdkZpbG1JbWFnZUxpc3RBbGxSZXMSLAoHcmVzdWx0cxgBIAMoCzISLndvd3R2LlR2RmlsbU'
+    'ltYWdlUgdyZXN1bHRz');
+
+@$core.Deprecated('Use tvFilmMediaListAllReqDescriptor instead')
+const TvFilmMediaListAllReq$json = {
+  '1': 'TvFilmMediaListAllReq',
+  '2': [
+    {'1': 'film', '3': 1, '4': 1, '5': 9, '10': 'film'},
+  ],
+};
+
+/// Descriptor for `TvFilmMediaListAllReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmMediaListAllReqDescriptor = $convert.base64Decode(
+    'ChVUdkZpbG1NZWRpYUxpc3RBbGxSZXESEgoEZmlsbRgBIAEoCVIEZmlsbQ==');
+
+@$core.Deprecated('Use tvFilmMediaListAllResDescriptor instead')
+const TvFilmMediaListAllRes$json = {
+  '1': 'TvFilmMediaListAllRes',
+  '2': [
+    {'1': 'results', '3': 1, '4': 3, '5': 11, '6': '.wowtv.TvFilmVideo', '10': 'results'},
+  ],
+};
+
+/// Descriptor for `TvFilmMediaListAllRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tvFilmMediaListAllResDescriptor = $convert.base64Decode(
+    'ChVUdkZpbG1NZWRpYUxpc3RBbGxSZXMSLAoHcmVzdWx0cxgBIAMoCzISLndvd3R2LlR2RmlsbV'
+    'ZpZGVvUgdyZXN1bHRz');
 

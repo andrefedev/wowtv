@@ -2,31 +2,31 @@ part of 'film_filter_bloc.dart';
 
 class TvFilmFilterState extends Equatable {
   final bool max;
-  final List<TvFilm> items;
-  final TvFilterData filter;
-  final TvFilmFilterStatus status;
+  final TvFilmFilter? filter;
+  final List<TvFilm> results;
+  final TvFilmFilterStatus statusx;
 
   const TvFilmFilterState({
     this.max = false,
-    this.items = const <TvFilm>[],
-    this.filter = const TvFilterData(),
-    this.status = const TvFilmFilterStatus(),
+    this.filter,
+    this.results = const <TvFilm>[],
+    this.statusx = const TvFilmFilterStatus(),
   });
 
   copyWith({
     bool? max,
-    List<TvFilm>? items,
-    TvFilterData? filter,
-    TvFilmFilterStatus? status,
+    TvFilmFilter? filter,
+    List<TvFilm>? results,
+    TvFilmFilterStatus? statusx,
   }) {
     return TvFilmFilterState(
       max: max ?? this.max,
-      items: items ?? this.items,
       filter: filter ?? this.filter,
-      status: status ?? this.status,
+      results: results ?? this.results,
+      statusx: statusx ?? this.statusx,
     );
   }
 
   @override
-  List<Object?> get props => [max, items, filter, status];
+  List<Object?> get props => [max, filter, results, statusx];
 }
